@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de Lista de Tarefas
 
-## Getting Started
+Este é um sistema web para cadastro e gerenciamento de tarefas, utilizando React e Firebase. O sistema permite que os usuários adicionem, editem, excluam e reordem tarefas.
 
-First, run the development server:
+## Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Listagem de Tarefas**: Visualização de todas as tarefas cadastradas.
+- **Adicionar Tarefa**: Inclusão de novas tarefas com nome, custo e data limite.
+- **Editar Tarefa**: Edição das informações de uma tarefa existente.
+- **Excluir Tarefa**: Remoção de uma tarefa após confirmação.
+- **Reordenar Tarefas**: Possibilidade de mudar a ordem das tarefas usando arrastar e soltar ou botões de subir/descer.
+- **Validação**: Verificação de nomes duplicados ao adicionar ou editar tarefas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **Firebase**: Plataforma para desenvolvimento de aplicativos, usada aqui para o gerenciamento do banco de dados.
+- **React Icons**: Biblioteca de ícones para uma interface mais intuitiva.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estrutura do Banco de Dados
 
-## Learn More
+### Tabela: `sistema-lista-de-tarefas`
 
-To learn more about Next.js, take a look at the following resources:
+| Campo                | Tipo      | Descrição                                     |
+|----------------------|-----------|-----------------------------------------------|
+| `id`                 | String    | Identificador único da tarefa (chave primária) |
+| `nome`               | String    | Nome da tarefa                                |
+| `custo`              | Number    | Custo da tarefa em R$                         |
+| `dataLimite`        | String    | Data limite para a conclusão da tarefa        |
+| `orden`              | Number    | Ordem de apresentação da tarefa                |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Instruções de Instalação
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seuusuario/sistema-lista-de-tarefas.git
