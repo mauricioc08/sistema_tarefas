@@ -100,8 +100,6 @@ h1 {
 }
 
 
-/*----*/
-
 .task-actions button:hover {
   color: #007bff;
 }
@@ -133,6 +131,10 @@ h1 {
 
 .task-input button:hover {
   background-color: #0056b3;
+}
+
+.task-input button:active {
+  transform: translateY(3px);
 }
 
 .modal {
