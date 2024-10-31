@@ -1,12 +1,11 @@
 import TaskList from "@/components/TaskList";
-import styles from "./page.module.css";
 
 
 export default function Home() {
   
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <div>
+      <main >
         <TaskList />
       </main>
     </div>
