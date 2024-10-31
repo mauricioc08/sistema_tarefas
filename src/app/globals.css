@@ -53,8 +53,18 @@ h1 {
   align-items: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
-  cursor: pointer;
 }
+
+.task-item {
+  transition: background-color 0.2s ease;
+  cursor: grab;
+}
+
+.task-item.dragging {
+  background-color: #f0f0f0;
+  opacity: 0.7;
+}
+
 
 .task-item.high-cost {
   border: 2px solid #ebb506;
@@ -69,6 +79,10 @@ h1 {
   font-size: 1.2rem;
   margin: 0;
   color: #333;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .task-details p {

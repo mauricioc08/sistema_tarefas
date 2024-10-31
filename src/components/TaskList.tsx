@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FiEdit2, FiX, FiChevronUp, FiChevronDown } from "react-icons/fi";
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, deleteDoc, doc, addDoc, updateDoc } from 'firebase/firestore';
@@ -16,6 +16,7 @@ const TaskList: React.FC = () => {
     const [tarefas, setTarefas] = useState<Tarefa[]>([]);
     const [novaTarefa, setNovaTarefa] = useState({ nome: '', custo: '', dataLimite: '' });
     const [tarefaEditando, setTarefaEditando] = useState<Tarefa | null>(null);
+    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchTarefas = async () => {
@@ -25,7 +26,7 @@ const TaskList: React.FC = () => {
                 id: doc.id,
                 ...doc.data()
             })) as Tarefa[];
-            setTarefas(tarefasList.sort((a, b) => a.orden - b.orden)); // Ordena as tarefas ao carregar
+            setTarefas(tarefasList.sort((a, b) => a.orden - b.orden));
         };
         fetchTarefas();
     }, []);
@@ -72,17 +73,42 @@ const TaskList: React.FC = () => {
     const moverTarefa = async (id: string, direcao: 'subir' | 'descer') => {
         const index = tarefas.findIndex(tarefa => tarefa.id === id);
         if (index < 0) return;
-
+    
+        const novoIndex = direcao === 'subir' ? index - 1 : index + 1;
+    
+        if (novoIndex < 0 || novoIndex >= tarefas.length) return;
+    
         const novaOrdem = [...tarefas];
         const [tarefa] = novaOrdem.splice(index, 1);
-        novaOrdem.splice(direcao === 'subir' ? index - 1 : index + 1, 0, tarefa);
-
-        const atualizacaoOrdem = novaOrdem.map((tarefa, index) => ({ ...tarefa, orden: index }));
-        setTarefas(atualizacaoOrdem);
-
-        for (const tarefa of atualizacaoOrdem) {
+        novaOrdem.splice(novoIndex, 0, tarefa);
+    
+        const tarefasAtualizadas = novaOrdem.map((tarefa, idx) => ({ ...tarefa, orden: idx }));
+        setTarefas(tarefasAtualizadas);
+    
+        for (const tarefa of tarefasAtualizadas) {
             const tarefaDoc = doc(db, 'sistema-lista-de-tarefas', tarefa.id);
             await updateDoc(tarefaDoc, { orden: tarefa.orden });
+        }
+    };
+    
+
+    const handleDragStart = (index: number) => {
+        setDraggedIndex(index);
+    };
+
+    const handleDragOver = (event: React.DragEvent<HTMLLIElement>) => {
+        event.preventDefault();
+    };
+
+    const handleDrop = (index: number) => {
+        if (draggedIndex !== null) {
+            const novaOrdem = [...tarefas];
+            const [draggedItem] = novaOrdem.splice(draggedIndex, 1);
+            novaOrdem.splice(index, 0, draggedItem);
+
+            const tarefasAtualizadas = novaOrdem.map((tarefa, idx) => ({ ...tarefa, orden: idx }));
+            setTarefas(tarefasAtualizadas);
+            setDraggedIndex(null);
         }
     };
 
@@ -91,7 +117,14 @@ const TaskList: React.FC = () => {
             <h1>Sistema de Tarefas</h1>
             <ul className="task-list">
                 {tarefas.map((tarefa, index) => (
-                    <li key={tarefa.id} className={`task-item ${tarefa.custo >= 1000 ? 'high-cost' : ''}`}>
+                    <li
+                        key={tarefa.id}
+                        className={`task-item ${tarefa.custo >= 1000 ? 'high-cost' : ''} ${index === draggedIndex ? 'dragging' : ''}`}
+                        draggable
+                        onDragStart={() => handleDragStart(index)}
+                        onDragOver={handleDragOver}
+                        onDrop={() => handleDrop(index)}
+                    >
                         <div className="task-details">
                             <h2>{tarefa.nome}</h2>
                             <p className="custo">Custo: R$ {tarefa.custo.toFixed(2)}</p>
@@ -115,7 +148,7 @@ const TaskList: React.FC = () => {
             {tarefaEditando && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h2>Editar Tarefa</h2>
+                       <h2>Editar Tarefa</h2>
                         <input type="text" value={tarefaEditando.nome} onChange={(e) => setTarefaEditando({ ...tarefaEditando, nome: e.target.value })} />
                         <input type="number" value={tarefaEditando.custo} onChange={(e) => setTarefaEditando({ ...tarefaEditando, custo: +e.target.value })} />
                         <input type="date" value={tarefaEditando.dataLimite} onChange={(e) => setTarefaEditando({ ...tarefaEditando, dataLimite: e.target.value })} />
