@@ -1,6 +1,6 @@
 # Sistema de Lista de Tarefas
 
-Este é um sistema web para cadastro e gerenciamento de tarefas, utilizando React e Firebase. O sistema permite que os usuários adicionem, editem, excluam e reordem tarefas.
+Este é um sistema web para cadastro e gerenciamento de tarefas, utilizando Nextjs e Firebase. O sistema permite que os usuários adicionem, editem, excluam e reordenem tarefas.
 
 ## Funcionalidades
 
@@ -13,7 +13,7 @@ Este é um sistema web para cadastro e gerenciamento de tarefas, utilizando Reac
 
 ## Tecnologias Utilizadas
 
-- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **Nextjs**: Biblioteca JavaScript para construção de interfaces de usuário.
 - **Firebase**: Plataforma para desenvolvimento de aplicativos, usada aqui para o gerenciamento do banco de dados.
 - **React Icons**: Biblioteca de ícones para uma interface mais intuitiva.
 
@@ -34,3 +34,22 @@ Este é um sistema web para cadastro e gerenciamento de tarefas, utilizando Reac
 1. Clone o repositório:
    ```bash
    git clone https://github.com/seuusuario/sistema-lista-de-tarefas.git
+
+2. Navegue até a pasta do projeto:
+   ```bash
+   cd sistema-lista-de-tarefas
+   
+3. Instale as dependências:  
+   ```bash
+   npm install
+   
+4. Configure o Firebase:
+    - Crie um projeto no Firebase Console.
+    - Copie as credenciais do seu projeto e configure no arquivo firebaseConfig.ts.
+   
+5. Inicie a aplicação:
+   ```bash
+   npm start
+
+# Link do Projeto:
+ https://github.com/mauricioc08   
